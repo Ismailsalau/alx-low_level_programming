@@ -5,6 +5,7 @@
 /**
  * main - print random numbers
  *
+ * Return: 0
  */
 
 int main(void)
