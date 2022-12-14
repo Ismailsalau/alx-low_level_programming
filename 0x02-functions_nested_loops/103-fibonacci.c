@@ -4,6 +4,7 @@
  * main - prints the sum of een-valued Fibonacci sequence
  *
  * Return: Always 0.
+ *
  */
 int main(void)
 {
