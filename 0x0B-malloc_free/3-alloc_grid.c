@@ -2,75 +2,35 @@
 #include <stdlib.h>
 
 /**
- * wrdcnt - counts the number of words in a string
- * @s: string to count
- *
- * Return: int of number of words
+ * alloc_grid - creates a 2d integer grid
+ * @width: number of columns
+ * @height: number of rows
+ * Return: pointer to grid or null
  */
-int wrdcnt(char *s)
+int **alloc_grid(int width, int height)
 {
-	int i, n = 0;
+	int **grid, i, j;
 
-	for (i = 0; s[i]; i++)
+	if (width < 1 || height < 1)
+		return (NULL);
+	grid = malloc(sizeof(int *) * height);
+	if (grid == NULL)
+		return (NULL);
+	for (i = 0; i < height; i++)
 	{
-		if (s[i] == ' ')
+		grid[i] = malloc(sizeof(int) * width);
+		if (grid[i] == NULL)
 		{
-			if (s[i + 1] != ' ' && s[i + 1] != '\0')
-				n++;
+			while (--i >= 0)
+				free(grid[i]);
+			free(grid);
+			return (NULL);
 		}
-		else if (i == 0)
-			n++;
 	}
-	n++;
-	return (n);
-}
-
-/**
- * strtow - splits a string into words
- * @str: string to split
- *
- * Return: pointer to an array of strings
- */
-char **strtow(char *str)
-{
-	int i, j, k, l, n = 0, wc = 0;
-	char **w;
-
-	if (str == NULL || *str == '\0')
-		return (NULL);
-	n = wrdcnt(str);
-	if (n == 1)
-		return (NULL);
-	w = (char **)malloc(n * sizeof(char *));
-	if (w == NULL)
-		return (NULL);
-	w[n - 1] = NULL;
-	i = 0;
-	while (str[i])
+	for (i = 0; i < height; i++)
 	{
-		if (str[i] != ' ' && (i == 0 || str[i - 1] == ' '))
-		{
-			for (j = 1; str[i + j] != ' ' && str[i + j]; j++)
-				;
-			j++;
-			w[wc] = (char *)malloc(j * sizeof(char));
-			j--;
-			if (w[wc] == NULL)
-			{
-				for (k = 0; k < wc; k++)
-					free(w[k]);
-				free(w[n - 1]);
-				free(w);
-				return (NULL);
-			}
-			for (l = 0; l < j; l++)
-				w[wc][l] = str[i + l];
-			w[wc][l] = '\0';
-			wc++;
-			i += j;
-		}
-		else
-			i++;
+		for (j = 0; j < width; j++)
+			grid[i][j] = 0;
 	}
-	return (w);
+	return (grid);
 }

@@ -2,39 +2,39 @@
 #include <stdlib.h>
 
 /**
- * argstostr - concatenates all the arguments of your program.
- * @ac: number of arguments
- * @av: double pointer to arguments
- *
- * Return:pointer to new string, or NULL if error
+ * *str_concat - concatenates two strings
+ * @s1: first string
+ * @s2: second string
+ * Return: pointer to new space in memory or null
  */
-char *argstostr(int ac, char **av)
+char *str_concat(char *s1, char *s2)
 {
-	int i, j, k = 0, n = 0;
-	char *s;
+	char *strDup;
+	int i, j;
 
-	if (ac <= 0 || av == NULL)
+	if (s1 == NULL)
+		s1 = "";
+	if (s2 == NULL)
+		s2 = "";
+	i = j = 0;
+	while (s1[i] != '\0')
+		i++;
+	while (s2[j] != '\0')
+		j++;
+	strDup = malloc(sizeof(char) * (i + j + 1));
+	if (strDup == NULL)
 		return (NULL);
-	for (i = 0; i < ac; i++)
+	i = j = 0;
+	while (s1[i] != '\0')
 	{
-		for (j = 0; av[i][j]; j++)
-			n++;
-		n++;
+		strDup[i] = s1[i];
+		i++;
 	}
-	n++;
-	s = malloc(n * sizeof(char));
-	if (s == NULL)
-		return (NULL);
-	for (i = 0; i < ac; i++)
+	while (s2[j] != '\0')
 	{
-		for (j = 0; av[i][j]; j++)
-		{
-			s[k] = av[i][j];
-			k++;
-		}
-		s[k] = '\n';
-		k++;
+		strDup[i] = s2[j];
+		i++, j++;
 	}
-	s[k] = '\0';
-	return (s);
+	strDup[i] = '\0';
+	return (strDup);
 }
